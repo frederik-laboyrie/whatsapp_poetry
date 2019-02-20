@@ -3,22 +3,29 @@ import pickle
 import numpy as np
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
+import yaml
 
-DISPLAY_STEP = 2
+CONFIG_TYPE = 'tf'
+with open("/opt/app/config.yaml", 'r') as stream:
+    CONFIG = yaml.load(stream)
 
-EPOCHS = 25
-BATCH_SIZE = 16
+DISPLAY_STEP = CONFIG[CONFIG_TYPE]['display_step']
 
-RNN_SIZE = 128
-NUM_LAYERS = 2
+EPOCHS = CONFIG[CONFIG_TYPE]['epochs']
+BATCH_SIZE = CONFIG[CONFIG_TYPE]['batch_size']
 
-ENCODING_EMBEDDING_SIZE = 50
-DECODING_EMBEDDING_SIZE = 50
+RNN_SIZE = CONFIG[CONFIG_TYPE]['rnn_size']
+NUM_LAYERS = CONFIG[CONFIG_TYPE]['num_layers']
 
-LEARNING_RATE = 0.01
-KEEP_PROBABILITY = 0.5
+ENCODING_EMBEDDING_SIZE = CONFIG[CONFIG_TYPE]['encoding_embedding_size']
+DECODING_EMBEDDING_SIZE = CONFIG[CONFIG_TYPE]['decoding_embedding_size']
 
-save_path = 'checkpoint/dev'
+LEARNING_RATE = CONFIG[CONFIG_TYPE]['learning_rate']
+KEEP_PROBABILITY = CONFIG[CONFIG_TYPE]['keep_probability']
+
+SAVE_PATH = '/opt/app/checkpoint/dev'
+INPUT_DATA = '/opt/app/input_data/tokenized_input.p'
+
 
 def enc_dec_model_inputs():
     inputs = tf.placeholder(tf.int32, [None, None], name='inputs')
@@ -243,7 +250,7 @@ def get_accuracy(target, logits):
 
 
 def load_preprocess():
-    with open("input_data/tokenized_input.p", mode='rb') as in_file:
+    with open(INPUT_DATA, mode='rb') as in_file:
         return pickle.load(in_file)
 
 
