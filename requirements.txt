@@ -1,3 +1,4 @@
-git+ssh://git@github.com/epigramai/tfserving-python-predict-client.git
 numpy
+sklearn
 tensorflow==1.5
+pyyaml

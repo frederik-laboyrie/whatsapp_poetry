@@ -6,7 +6,7 @@ import tensorflow as tf
 import yaml
 
 CONFIG_TYPE = 'tf'
-with open("/opt/app/config.yaml", 'r') as stream:
+with open("/opt/app/config/config.yaml", 'r') as stream:
     CONFIG = yaml.load(stream)
 
 DISPLAY_STEP = CONFIG[CONFIG_TYPE]['display_step']
@@ -381,13 +381,14 @@ def load_data_and_train(
 
         # Save Model
         saver = tf.train.Saver()
-        saver.save(sess, save_path)
+        saver.save(sess, SAVE_PATH)
         print('Model Trained and Saved')
 
 
 def save_params(params):
-    with open('params.p', 'wb') as out_file:
+    with open('/opt/app/config/params.p', 'wb') as out_file:
         pickle.dump(params, out_file)
+
 
 def main():
 
@@ -406,7 +407,7 @@ def main():
             keep_prob
          )
 
-    save_params(save_path)
+    save_params(SAVE_PATH)
 
 if __name__ == "__main__":
     main()

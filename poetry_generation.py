@@ -8,12 +8,12 @@ BATCH_SIZE = 16
 
 
 def load_params():
-    with open('params.p', mode='rb') as in_file:
+    with open('/opt/app/config/params.p', mode='rb') as in_file:
         return pickle.load(in_file)
 
 
 def load_preprocess():
-    with open("input_data/tokenized_input.p", mode='rb') as in_file:
+    with open("/opt/app/input_data/tokenized_input.p", mode='rb') as in_file:
         return pickle.load(in_file)
 
 
