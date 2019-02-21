@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: poetry-train-1
+  labels:
+    app: poetry
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: poetry
+        tier: backend
+    spec:
+      containers:
+      - name: poetry-app
+        image: gcr.io/poetry/poetry_app:v1
+        imagePullPolicy: Always
+        env:
+        - name: PROCESSES
+          value: poetry
+        ports:
+        - name: http-server
+          containerPort: 8080
