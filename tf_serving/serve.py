@@ -1,7 +1,7 @@
 import tensorflow as tf
 import os
 
-SAVE_PATH = 'checkpoint'
+SAVE_PATH = '../checkpoint'
 MODEL_NAME = 'test'
 VERSION = 5
 SERVE_PATH = './serve/{}/{}'.format(MODEL_NAME, VERSION)
