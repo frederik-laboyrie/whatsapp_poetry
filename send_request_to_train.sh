@@ -1,0 +1,1 @@
+docker exec 060354ab5fb6 curl http://localhost:8080

@@ -1,0 +1,23 @@
+# build image tagged to project
+cloud config set project poetry
+docker build -t gcr.io/poetry/poetry_app:v1 .
+
+# authorise and push to registry
+gcloud auth configure-docker
+docker push gcr.io/poetry/poetry_app:v1
+
+# test is runs locally
+#docker run --rm -p 8080:8080 gcr.io/poetry/poetry_app:v1
+
+# create cluster
+gcloud container clusters create poetry-cluster --num-nodes=3 --zone=europe-west1-b
+
+#deploy application
+kubectl create -f poetry_deploy.yaml
+
+#expose to traffic
+kubectl expose deployment poetry-train-1 --type=LoadBalancer --port 80 --target-port 8080
+
+#clean up now that not using
+kubectl delete service poetry-train-1
+gcloud container clusters delete poetry-cluster --zone=europe-west1-b
