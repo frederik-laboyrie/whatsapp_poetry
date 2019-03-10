@@ -14,12 +14,12 @@ MESSAGES_FILENAME = 'fwchat.txt'
 INPUT_DATA_WRITE_PATH = 'input_data/'
 WHATSAPP_FILLERS = ['media omitted']
 USE_POETRY = True
-OUT_PATH = 'raw_poetry.txt' if USE_POETRY else 'raw_whatsapp.txt'
+OUT_PATH = 'raw_poetry2.txt' if USE_POETRY else 'raw_whatsapp2.txt'
 
 def poetry_cleaner(
         poetry_books=BOOKS
     ):
-    with open(INPUT_DATA_WRITE_PATH + 'raw_poetry.txt', 'w') as ofp:
+    with open(INPUT_DATA_WRITE_PATH + OUT_PATH, 'w') as ofp:
 
         lineno = 0
 
@@ -45,10 +45,11 @@ def poetry_cleaner(
 
 
 def whatsapp_cleaner(
+        input_file_path=MESSAGES_FILENAME,
         whatsapp_fillers=WHATSAPP_FILLERS,
     ):
 
-    with open(INPUT_DATA_WRITE_PATH + MESSAGES_FILENAME, 'r') as f, \
+    with open(INPUT_DATA_WRITE_PATH + input_file_path, 'r') as f, \
             open(INPUT_DATA_WRITE_PATH + OUT_PATH, 'a') as ofp:
 
         line_ct = 0
@@ -58,7 +59,7 @@ def whatsapp_cleaner(
             message = line.split(": ", 1)[1]
             clean_message = re.sub(r'([^\s\w]|_)+', '', message).lower()[:-1] # TODO: don't have -1 indexing to get rid of ]n
             nb_words_clean = len(clean_message.split(" "))
-            #import pdb; pdb.set_trace()
+
             if clean_message in whatsapp_fillers:
                 continue
 
@@ -75,8 +76,8 @@ def whatsapp_cleaner(
 
 def convert_to_source_and_target():
     with open(INPUT_DATA_WRITE_PATH + OUT_PATH, 'r') as rawfp, \
-            open(INPUT_DATA_WRITE_PATH + 'input.txt', 'w') as infp, \
-            open(INPUT_DATA_WRITE_PATH + 'output.txt', 'w') as outfp:
+            open(INPUT_DATA_WRITE_PATH + 'input2.txt', 'w') as infp, \
+            open(INPUT_DATA_WRITE_PATH + 'output2.txt', 'w') as outfp:
         prev_line = ''
         for curr_line in rawfp:
             curr_line = curr_line.strip()
@@ -92,10 +93,11 @@ def convert_to_source_and_target():
     print('Wrote messages and poetry to source and target')
 
 
-def main():
+def main(input_file_path=None):
+    input_file_path = input_file_path if input_file_path else MESSAGES_FILENAME
     if USE_POETRY:
         poetry_cleaner()
-    whatsapp_cleaner()
+    whatsapp_cleaner(input_file_path=input_file_path)
     convert_to_source_and_target()
 
 if __name__ == '__main__':

@@ -1,4 +1,5 @@
+gutenberg
 numpy
 sklearn
-tensorflow==1.5
 pyyaml
+tensorflow==1.5

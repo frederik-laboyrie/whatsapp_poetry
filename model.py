@@ -6,7 +6,7 @@ import tensorflow as tf
 import yaml
 
 CONFIG_TYPE = 'tf'
-with open("/opt/app/config/config.yaml", 'r') as stream:
+with open("config/config.yaml", 'r') as stream:
     CONFIG = yaml.load(stream)
 
 DISPLAY_STEP = CONFIG[CONFIG_TYPE]['display_step']
@@ -23,8 +23,8 @@ DECODING_EMBEDDING_SIZE = CONFIG[CONFIG_TYPE]['decoding_embedding_size']
 LEARNING_RATE = CONFIG[CONFIG_TYPE]['learning_rate']
 KEEP_PROBABILITY = CONFIG[CONFIG_TYPE]['keep_probability']
 
-SAVE_PATH = '/opt/app/checkpoint/dev'
-INPUT_DATA = '/opt/app/input_data/tokenized_input.p'
+SAVE_PATH = 'checkpoint/dev'
+INPUT_DATA = 'input_data/tokenized_input2.p'
 
 
 def enc_dec_model_inputs():
@@ -238,12 +238,12 @@ def get_accuracy(target, logits):
     if max_seq - target.shape[1]:
         target = np.pad(
             target,
-            [(0,0),(0,max_seq - target.shape[1])],
+            [(0, 0), (0, max_seq - target.shape[1])],
             'constant')
     if max_seq - logits.shape[1]:
         logits = np.pad(
             logits,
-            [(0,0),(0,max_seq - logits.shape[1])],
+            [(0, 0), (0, max_seq - logits.shape[1])],
             'constant')
 
     return np.mean(np.equal(target, logits))
@@ -386,12 +386,11 @@ def load_data_and_train(
 
 
 def save_params(params):
-    with open('/opt/app/config/params.p', 'wb') as out_file:
+    with open('config/params.p', 'wb') as out_file:
         pickle.dump(params, out_file)
 
 
 def main():
-
     train_graph, train_op, input_data, targets, lr, target_sequence_length, cost, inference_logits, keep_prob = \
         get_train_graph()
 
@@ -411,6 +410,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-

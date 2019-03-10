@@ -4,7 +4,7 @@ import os
 import pickle
 
 CODES = {'<PAD>': 0, '<EOS>': 1, '<UNK>': 2, '<GO>': 3 }
-TOKENISED_FILENAME = 'tokenized_input.p'
+TOKENISED_FILENAME = 'tokenized_input2.p'
 INPUT_DATA_WRITE_PATH = 'input_data/'
 
 
@@ -18,8 +18,8 @@ def load_data(path):
 
 
 def get_source_and_target(
-        source_path='input.txt',
-        target_path='output.txt',
+        source_path='input2.txt',
+        target_path='output2.txt',
     ):
     source_text = load_data(INPUT_DATA_WRITE_PATH + source_path)
     target_text = load_data(INPUT_DATA_WRITE_PATH + target_path)
@@ -92,9 +92,10 @@ def text_to_ids(source_text, target_text, source_vocab_to_int, target_vocab_to_i
 
 
 def preprocess_and_save_data(
-        source_path=INPUT_DATA_WRITE_PATH + 'input.txt',
-        target_path=INPUT_DATA_WRITE_PATH + 'output.txt',
-        text_to_ids=text_to_ids):
+        source_path=INPUT_DATA_WRITE_PATH + 'input2.txt',
+        target_path=INPUT_DATA_WRITE_PATH + 'output2.txt',
+        text_to_ids=text_to_ids
+    ):
     # Preprocess
 
     source_text = load_data(source_path)
