@@ -1,1 +1,1 @@
-docker exec 060354ab5fb6 curl http://localhost:8080
+docker exec 07301c1af3b2 curl --request POST --data-binary "@input_data/fwchat.txt" http://localhost:8080
